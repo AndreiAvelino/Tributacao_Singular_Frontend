@@ -1,0 +1,56 @@
+<app-card-default titulo="Cadastro de categoria">
+
+  <form [formGroup]="formulario">
+
+    <div class="row">
+
+      <div class="col-sm-6">
+        <mat-form-field appearance="outline" class="input">
+          <mat-label>
+            Descrição
+          </mat-label>
+          <input type="text" matInput formControlName="descricao">       
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline" class="input">
+          <mat-label>
+            ICMS
+          </mat-label>
+          <input type="number" matInput formControlName="icms">       
+        </mat-form-field>  
+      </div>
+
+      <div class="col-sm-6">
+        <mat-form-field appearance="outline" class="input">
+          <mat-label>
+            COFINS
+          </mat-label>
+          <input type="number" matInput formControlName="cofins">       
+      </mat-form-field>
+  
+        <mat-form-field appearance="outline" class="input">
+          <mat-label>
+            IPI
+          </mat-label>
+          <input type="number" matInput formControlName="ipi">       
+        </mat-form-field>
+      </div>
+
+    </div>
+    
+
+</form>
+
+
+</app-card-default>
+
+<app-crud-buttons
+    [labelBotaoPost]="'Adicionar'"
+    [labelBotaoPut]="'Alterar'"
+    [labelBotaoAuxUm]="'Voltar'"
+    [disablePost]="!formulario.valid"
+    (OnClickButtonPost)="post()"
+    (OnClickButtonPut)="put()"
+    (OnClickButtonDelete)="delete()"
+    (OnClickButtonAuxUm)="voltar()"
+></app-crud-buttons>

@@ -1,0 +1,52 @@
+<app-card-default titulo="Cadastro de cliente">
+
+  <form [formGroup]="formulario">
+
+    <div class="row">
+
+      <div class="col-sm-6">
+        <mat-form-field appearance="outline" class="input">
+          <mat-label>
+            E-mail
+          </mat-label>
+          <input type="email" matInput formControlName="email">       
+      </mat-form-field>  
+      </div>
+
+      <div class="col-sm-6">
+        <mat-form-field appearance="outline" class="input">
+          <mat-label>
+            Senha
+          </mat-label>
+          <input type="password" matInput formControlName="password">       
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline" class="input">
+          <mat-label>
+            Confirmar senha
+          </mat-label>
+          <input type="password" matInput formControlName="confirmPassword">       
+      </mat-form-field>
+      </div>
+
+    </div>
+
+
+    <mat-radio-group formControlName= "role" aria-label="Informe o cargo do usuário">
+        <mat-radio-button value="1">Administrador</mat-radio-button>
+        <mat-radio-button value="2">Tributarista</mat-radio-button>
+    </mat-radio-group>
+
+</form>
+
+</app-card-default>
+
+<app-crud-buttons
+    [labelBotaoPost]="'Adicionar'"
+    [labelBotaoPut]="'Alterar'"
+    [disablePost]="!formulario.valid"
+    [showAuxUm]=false
+    [showPut]=false
+    [showDelete]=false
+    (OnClickButtonPost)="post()"
+></app-crud-buttons>

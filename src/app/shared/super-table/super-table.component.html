@@ -1,0 +1,30 @@
+<mat-form-field appearance="standard" style="margin-left: 15px; margin-top: 15px; width: 90%">
+  <mat-label>Filtro</mat-label>
+  <input matInput (keyup)="filtrar($event)" placeholder="Informe o filtro..." #input>
+</mat-form-field>
+  
+  <div class="estilo">
+    <table mat-table [dataSource]="registros" matSort>
+
+      <ng-container *ngFor="let coluna of colunas; let colIndex = index" matColumnDef="{{coluna.valor}}">
+        <th  mat-header-cell *matHeaderCellDef> {{coluna.visualizacao}} </th>
+
+        <td mat-cell [ngSwitch]="coluna.valor" *matCellDef="let linha"> 
+          <mat-icon *ngSwitchCase="'alterar'" (click)="clickPut(linha)" class="alterar">create</mat-icon>
+          <mat-icon *ngSwitchCase="'excluir'" (click)="clickDelete(linha)" class="delete">delete</mat-icon>
+          <p *ngSwitchDefault>{{linha[coluna.valor]}}</p>
+         </td>
+
+      </ng-container>  
+
+
+      <tr mat-header-row *matHeaderRowDef="retornaColunas()"></tr>
+      <tr mat-row *matRowDef="let linha; columns: retornaColunas();"></tr>
+ 
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="6">Não foi encontrado registros para: "{{input.value}}"</td>
+      </tr>
+    </table>
+  
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Categorias por página"></mat-paginator>
+  </div>

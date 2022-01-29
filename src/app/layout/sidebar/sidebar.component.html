@@ -1,0 +1,14 @@
+<!-- <app-navbar></app-navbar> -->
+
+<mat-sidenav-container
+  class="layout">
+  <mat-sidenav mode="side" class="layout-sidebar" #sidenav [opened]="page.SIDENAV_STATE" disableClose>
+    <mat-nav-list class="mat-list-base">
+      <menu-item *ngFor="let item of menuUsuario" [item]="item"></menu-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="layout-content">
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

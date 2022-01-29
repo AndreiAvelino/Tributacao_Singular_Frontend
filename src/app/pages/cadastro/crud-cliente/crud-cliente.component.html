@@ -1,0 +1,68 @@
+<app-card-default titulo="Cadastro de cliente">
+  <form [formGroup]="formulario">
+    <div class="row">
+  
+      <div class="col-sm-6">
+  
+        <mat-form-field appearance="outline" style="width: 100%;">
+          <mat-label>
+            Nome
+          </mat-label>
+          <input type="email" matInput formControlName="nome">       
+        </mat-form-field>
+  
+        <br>
+    
+        <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label>
+              E-mail
+            </mat-label>
+            <input type="email" matInput formControlName="email">       
+        </mat-form-field>
+    
+        <br>
+  
+        <mat-form-field appearance="outline" style="width: 100%;">
+          <mat-label>
+            CNPJ
+          </mat-label>
+          <input type="text" matInput formControlName="cnpj">       
+      </mat-form-field>
+  
+      </div>
+      <div class="col-sm-6">
+  
+        <mat-form-field appearance="outline" style="width: 100%;">
+          <mat-label>
+            Senha
+          </mat-label>
+          <input type="password" matInput formControlName="password">       
+        </mat-form-field>
+  
+        <br>
+  
+        <mat-form-field appearance="outline" style="width: 100%;">
+          <mat-label>
+            Confirmar senha
+          </mat-label>
+          <input type="password" matInput formControlName="confirmPassword">       
+        </mat-form-field>
+  
+      </div>
+  
+    </div>  
+  </form>
+
+</app-card-default>
+ 
+
+<app-crud-buttons
+    [labelBotaoPost]="'Adicionar'"
+    [labelBotaoPut]="'Alterar'"
+    [labelBotaoAuxUm]="'Voltar'"
+    [disablePost]="!formulario.valid"
+    (OnClickButtonPost)="post()"
+    (OnClickButtonPut)="put()"
+    (OnClickButtonDelete)="delete()"
+    (OnClickButtonAuxUm)="voltar()"
+></app-crud-buttons>

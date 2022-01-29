@@ -1,0 +1,11 @@
+<h3 mat-dialog-title class="titulo">{{info.titulo}} </h3>
+<hr>
+<mat-dialog-content class="mat-typography">
+  <p>{{info.mensagem}}</p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="center">
+  <button mat-raised-button color="primary" style="min-width: 100px" (click)="Resposta(true)">{{info.positivo}}</button>
+  <button mat-raised-button color="warn"    style="min-width: 100px; margin-left: 15px;" (click)="Resposta(false)">{{info.negativo}}</button>
+</mat-dialog-actions>
+

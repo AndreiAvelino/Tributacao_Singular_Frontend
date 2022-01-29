@@ -1,0 +1,17 @@
+<super-table 
+    [registros]="registros"
+    [colunas]="colunas"
+    (btnPutClick)="alterar($event)"
+    (btnDeleteClick)="delete($event)"
+    [showAlterar]="showAlterar"
+    [showExcluir]="showExcluir"
+    >
+</super-table>
+
+<mat-card style="margin-left: 15px; margin-right: 15px; margin-top: 15px;" class="d-flex justify-content-end" *ngIf="mostrarAdicionarProduto()">
+
+    <button (click)="adicionarProduto()"
+    mat-flat-button 
+    color="primary">Adicionar produto</button>
+            
+</mat-card>

@@ -1,0 +1,34 @@
+<div class="auth-page">
+  <div class="auth-page__content-block">
+    <div class="auth-page__content-wrapper">
+
+
+          <div class="auth-page__group">
+            <h4 class="auth-page__group-title">Login</h4>
+
+            <form class="form" [formGroup]="formulario" (ngSubmit)="login()">
+              <mat-form-field class="form__input">
+                <input matInput placeholder="e-mail" type="text" formControlName="email">
+              </mat-form-field>
+            
+              <mat-form-field class="form__input">
+                <input matInput placeholder="senha" type="password" formControlName="password">
+              </mat-form-field>
+            
+              <div class="form-actions">
+                <button class="form-actions__login" style="cursor: pointer !important; width: 100%;" mat-raised-button color="primary" type="submit">Login</button>
+              </div>
+            </form>
+          </div>
+
+
+      <!-- <p class="auth-page__footer-title">© 2014-{{todayDate | year}} <a href="https://flatlogic.com/">Flatlogic</a>, LLC. All rights reserved.</p> -->
+    </div>
+  </div>
+  <div class="auth-page__logo">
+    <div class="auth-page__logo-wrapper">
+      <!-- <img class="auth-page__logo-img" src="./assets/auth/logo.svg" alt="logo"> -->
+      <h6 class="auth-page__logo-title">Login</h6>
+    </div>
+  </div>
+</div>

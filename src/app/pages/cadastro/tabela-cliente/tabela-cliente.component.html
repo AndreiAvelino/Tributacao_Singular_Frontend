@@ -1,0 +1,16 @@
+<super-table 
+    [registros]="registros"
+    [colunas]="colunas"
+    (btnPutClick)="alterar($event)"
+    (btnDeleteClick)="delete($event)"
+    >
+</super-table>
+
+<mat-card style="margin-left: 15px; margin-right: 15px; margin-top: 15px;" class="d-flex justify-content-end">
+
+    <button (click)="adicionarCliente()"
+        mat-flat-button 
+        color="primary">Adicionar cliente</button>
+            
+</mat-card>
+
