@@ -8,7 +8,10 @@
           <mat-label>
             Nome
           </mat-label>
-          <input type="email" matInput formControlName="nome">       
+          <input type="text" matInput formControlName="nome">       
+          <mat-error *ngIf="formulario.controls.nome.hasError('required')">
+            Informe o nome do cliente
+          </mat-error>  
         </mat-form-field>
   
         <br>
@@ -17,7 +20,13 @@
             <mat-label>
               E-mail
             </mat-label>
-            <input type="email" matInput formControlName="email">       
+            <input type="email" matInput formControlName="email">
+            <mat-error *ngIf="formulario.controls.email.hasError('required')">
+              Informe o nome do cliente
+            </mat-error>  
+            <mat-error *ngIf="formulario.controls.email.hasError('email')">
+              O e-mail deve possuir um formato <strong>válido</strong>
+            </mat-error>         
         </mat-form-field>
     
         <br>
@@ -26,7 +35,13 @@
           <mat-label>
             CNPJ
           </mat-label>
-          <input type="text" matInput formControlName="cnpj">       
+          <input type="text" matInput formControlName="cnpj" [value]="formulario.value.cnpj | cnpj">  
+          <mat-error *ngIf="formulario.controls.cnpj.hasError('cnpjValidator')">
+            A numeração do CNPJ é <strong>inválida</strong>
+          </mat-error>       
+          <mat-error *ngIf="formulario.controls.cnpj.hasError('cnpjFormat')">
+            O cnpj deve ter um formato <strong>válido</strong>
+          </mat-error>     
       </mat-form-field>
   
       </div>
@@ -36,7 +51,7 @@
           <mat-label>
             Senha
           </mat-label>
-          <input type="password" matInput formControlName="password">       
+          <input #senha type="password" matInput formControlName="password">       
         </mat-form-field>
   
         <br>
@@ -45,7 +60,10 @@
           <mat-label>
             Confirmar senha
           </mat-label>
-          <input type="password" matInput formControlName="confirmPassword">       
+          <input type="password" matInput formControlName="confirmPassword">      
+          <mat-error *ngIf="formulario.controls.confirmPassword.hasError('confirmedValidator')">
+            As senhas não coincidem
+          </mat-error>     
         </mat-form-field>
   
       </div>
@@ -61,6 +79,10 @@
     [labelBotaoPut]="'Alterar'"
     [labelBotaoAuxUm]="'Voltar'"
     [disablePost]="!formulario.valid"
+    [showPut]="!cadastrar"
+    [showAuxUm]="!cadastrar"
+    [showPost]="cadastrar"
+    [showDelete]=false
     (OnClickButtonPost)="post()"
     (OnClickButtonPut)="put()"
     (OnClickButtonDelete)="delete()"

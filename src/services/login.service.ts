@@ -18,19 +18,15 @@ export class LoginService {
               private _localStorage: LocalStorageService,
               private _router: Router) { }
 
-  async login(formulario): Promise<void>{
-    
-    await this._http.post<any>(`${this.url}entrar`, formulario).toPromise()
-      .then(r => this.setOnLocalStorage(r.data))
-
-    this.redirect();
+  public login(formulario){    
+    return this._http.post<any>(`${this.url}entrar`, formulario)
   }
 
-  private setOnLocalStorage(value){
+  public setOnLocalStorage(value){
     this._localStorage.set("user", value)
   }
 
-  private redirect(){
-    this._router.navigate([`../${routes.PRINCIPAL}`]).then(() => console.log("entrou"))
+  public redirect(){
+    this._router.navigate([`../${routes.PRINCIPAL}`]).then(() => {})
   }
 }

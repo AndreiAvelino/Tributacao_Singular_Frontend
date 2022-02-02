@@ -15,9 +15,26 @@
                 <input matInput placeholder="senha" type="password" formControlName="password">
               </mat-form-field>
             
-              <div class="form-actions">
+              <!-- <div class="form-actions">
                 <button class="form-actions__login" style="cursor: pointer !important; width: 100%;" mat-raised-button color="primary" type="submit">Login</button>
-              </div>
+              </div> -->
+
+								<button 
+									[ngClass]="formulario.status == 'INVALID' ? 'btn float-right btn_invalido' : 'btn float-right btn_valido' "
+                  [disabled]="formulario.status == 'INVALID'"
+									type="submit">
+
+									<div *ngIf="!logando; else spinner" style="font-size: 15px;">
+										Login
+									</div>
+
+									<ng-template #spinner>
+										<mat-spinner disabled [diameter]="24" style="margin-left: 45%"
+											class="mat-spinner-color"></mat-spinner>
+									</ng-template>
+
+								</button>
+
             </form>
           </div>
 

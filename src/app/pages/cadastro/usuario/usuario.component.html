@@ -1,4 +1,4 @@
-<app-card-default titulo="Cadastro de cliente">
+<app-card-default titulo="Cadastro de usuários">
 
   <form [formGroup]="formulario">
 
@@ -9,8 +9,20 @@
           <mat-label>
             E-mail
           </mat-label>
-          <input type="email" matInput formControlName="email">       
+          <input type="email" matInput formControlName="email">    
+          <mat-error *ngIf="formulario.controls.email.hasError('required')">
+            O email é <strong>obrigatório</strong>
+          </mat-error>   
+          <mat-error *ngIf="formulario.controls.email.hasError('email')">
+            O email deve ter um formato <strong>válido</strong>
+          </mat-error>   
       </mat-form-field>  
+
+      <mat-radio-group class="radio-group" *ngIf="!formulario.value.id" formControlName= "role" aria-label="Informe o cargo do usuário">
+        <mat-radio-button value="1">Administrador</mat-radio-button>
+        <mat-radio-button value="2">Tributarista</mat-radio-button>
+      </mat-radio-group>
+
       </div>
 
       <div class="col-sm-6">
@@ -18,7 +30,10 @@
           <mat-label>
             Senha
           </mat-label>
-          <input type="password" matInput formControlName="password">       
+          <input type="password" matInput formControlName="password">  
+          <mat-error *ngIf="formulario.controls.password.hasError('minlength')">
+            A senha deve possuir no mínimo 6 caracteres
+          </mat-error>     
       </mat-form-field>
   
       <mat-form-field appearance="outline" class="input">
@@ -26,16 +41,15 @@
             Confirmar senha
           </mat-label>
           <input type="password" matInput formControlName="confirmPassword">       
+          <mat-error *ngIf="formulario.controls.confirmPassword.hasError('confirmedValidator')">
+            As senhas não coincidem
+          </mat-error>     
       </mat-form-field>
       </div>
 
     </div>
 
 
-    <mat-radio-group formControlName= "role" aria-label="Informe o cargo do usuário">
-        <mat-radio-button value="1">Administrador</mat-radio-button>
-        <mat-radio-button value="2">Tributarista</mat-radio-button>
-    </mat-radio-group>
 
 </form>
 
@@ -44,9 +58,13 @@
 <app-crud-buttons
     [labelBotaoPost]="'Adicionar'"
     [labelBotaoPut]="'Alterar'"
+    [labelBotaoAuxUm]="'Voltar'"
     [disablePost]="!formulario.valid"
-    [showAuxUm]=false
-    [showPut]=false
+    [showAuxUm]="!cadastrar"
+    [showPost]="cadastrar"
+    [showPut]="!cadastrar"
     [showDelete]=false
     (OnClickButtonPost)="post()"
+    (OnClickButtonPut)="put()"
+    (OnClickButtonAuxUm)="voltar()"
 ></app-crud-buttons>

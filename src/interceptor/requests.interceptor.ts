@@ -19,8 +19,6 @@ export class RequestsInterceptor implements HttpInterceptor {
 
     if (user) {
 
-      console.log(user.accessToken)
-
       request = request.clone({
           headers: request.headers.set('Authorization', 'Bearer ' + user.accessToken)
       });

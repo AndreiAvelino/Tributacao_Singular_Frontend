@@ -17,8 +17,6 @@ export class TabelaClienteResolve implements Resolve<any> {
 
         await this.get_clientes();
 
-        console.log(this.clientes)
-
         return {clientes: this.clientes}
     }
 

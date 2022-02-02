@@ -1,9 +1,11 @@
+import { SelectionModel } from '@angular/cdk/collections';
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ColunasFormulario } from 'src/app/models/ColunasFormulario';
 import { Categoria } from 'src/app/pages/operacoes/tabela-categoria/tabela-categoria.component';
+import { SuperTableService } from 'src/services/super-table.service';
 
 @Component({
   selector: 'super-table',
@@ -18,14 +20,21 @@ export class SuperTableComponent implements OnInit, AfterViewInit {
   @Input('showExcluir') showExcluir = true;
   @Output() btnPutClick = new EventEmitter();
   @Output() btnDeleteClick = new EventEmitter();
+  @Output() selecionados = new EventEmitter();
 
   public colunasExibidas = []
+  private selection = new SelectionModel<[]>(true, []);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  constructor(private _superTable: SuperTableService){}
+
 
   ngOnInit(): void {
+
+    this._superTable.reset
+      .subscribe(() => this.selection.clear())
 
     if(this.showAlterar){
       this.colunas.push({
@@ -48,6 +57,8 @@ export class SuperTableComponent implements OnInit, AfterViewInit {
     this.registros = new MatTableDataSource<Categoria>(this.registros); 
     this.registros.paginator = this.paginator;
     this.registros.sort = this.sort;
+
+    this.selection.changed.subscribe(() => this.emitirSelecionados())
   }
 
   public filtrar(event: Event): void {
@@ -71,4 +82,24 @@ export class SuperTableComponent implements OnInit, AfterViewInit {
   public retornaColunas(){
     return this.colunas.map(v => v.valor)
   }  
+
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.registros.data.filter(v => v.status == 1).length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      return;
+    }
+
+    this.selection.select(...this.registros.data.filter(v => v.status == 1));
+  }
+
+  public emitirSelecionados(){
+    this.selecionados.emit(this.selection.selected)
+  }
 }

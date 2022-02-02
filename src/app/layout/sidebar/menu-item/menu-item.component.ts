@@ -16,8 +16,4 @@ export class MenuItemComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  teste(){
-    console.log("testedffe")
-  }
-
 }

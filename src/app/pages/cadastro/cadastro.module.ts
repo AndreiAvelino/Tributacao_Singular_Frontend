@@ -15,13 +15,16 @@ import { TabelaClienteComponent } from './tabela-cliente/tabela-cliente.componen
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { TabelaUsuarioComponent } from './tabela-usuario/tabela-usuario.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 
 const materialModules = [
   MatInputModule,
   MatFormFieldModule,
   MatRadioModule,
   MatCardModule,
-  MatButtonModule
+  MatButtonModule,
+  MatSnackBarModule
 ]
 
 const routeModules = [
@@ -46,6 +49,7 @@ const internalComponents = [
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
+    PipesModule,
     ...routeModules,
     ...materialModules
   ]

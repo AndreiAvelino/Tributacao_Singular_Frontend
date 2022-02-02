@@ -273,7 +273,6 @@ export class TabelaCategoriaResolve implements Resolve<any> {
         await this._categoriaService.get_all()
             .toPromise()
             .then(r => this.categorias = r.data)
-            .catch(e => console.log(e))
     }
 
 }

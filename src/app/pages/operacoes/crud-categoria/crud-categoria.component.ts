@@ -1,6 +1,7 @@
 import { Location } from '@angular/common';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { CategoriaService } from 'src/services/categoria.service';
 
@@ -13,10 +14,12 @@ export class CrudCategoriaComponent{
 
   public formulario: FormGroup
   public categoria;
+  public cadastro: boolean = true
 
   constructor(private _categoriaService: CategoriaService,
               private _formBuilder: FormBuilder,
               private _router: Router,
+              private _snackBar: MatSnackBar,
               private _location: Location) {
 
                 this.criar_formulario(); 
@@ -40,8 +43,10 @@ export class CrudCategoriaComponent{
 
     var categoria;
 
-    if(this._router.getCurrentNavigation().extras.state)
+    if(this._router.getCurrentNavigation().extras.state){
       categoria = this._router.getCurrentNavigation().extras.state.categoria
+      this.cadastro = false
+    }      
 
     if(categoria){
       this.formulario.patchValue({
@@ -62,24 +67,33 @@ export class CrudCategoriaComponent{
 
     this._categoriaService.post(this.formulario.value)
       .toPromise()
-      .then(r => console.log(r))
-      .catch(e => console.log(e))
+      .then(r => {
+        this.mostrarMensagem(r)
+        this.voltar()
+      })
+      .catch(e => this.mostrarErros(e))
   }
 
   public put(): void{
 
     this._categoriaService.put(this.formulario.value)
       .toPromise()
-      .then(r => console.log(r))
-      .catch(e => console.log(e))
+      .then(r => {
+        this.mostrarMensagem(r)
+        this.voltar()
+      })
+      .catch(e => this.mostrarErros(e))
   }
 
   public delete(): void{
 
     this._categoriaService.delete(this.formulario.value.id)
       .toPromise()
-      .then(r => console.log(r))
-      .catch(e => console.log(e))
+      .then(r => {
+        this.mostrarMensagem(r)
+        this.voltar()
+      })
+      .catch(e => this.mostrarErros(e))
 
   }
  
@@ -88,5 +102,25 @@ export class CrudCategoriaComponent{
  public voltar(): void{
   this._location.back();
  }
+ 
+ public mostrarErros(e): void{
+  if(e.error){
+    var erros = <Array<string>> (Object.values(e.error.errors))  
+    for(let i = 0; i < erros.length; i++){
+      this._snackBar.open(erros[i], 'Fechar');
+    }
+  } else {
+    this._snackBar.open(e.message, 'Fechar');
+    } 
+  }
+
+  public mostrarMensagem(r): void{
+    if(typeof(r.data) == 'string'){
+      this._snackBar.open(r.data, 'Fechar');   
+    } else {
+      this._snackBar.open("Operação realizada com sucesso", 'Fechar');   
+    }  
+  }
+ 
 
 }

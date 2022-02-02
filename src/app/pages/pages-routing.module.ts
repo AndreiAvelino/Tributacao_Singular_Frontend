@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PagesComponent } from './pages.component';
 import { PrincipalComponent } from './principal/principal.component';
+import { PrincipalResolve } from './principal/principal.resolve';
 
 const routes: Routes = [
     {
@@ -10,7 +11,8 @@ const routes: Routes = [
       children: [
         {
           path: 'principal',
-          component: PrincipalComponent
+          component: PrincipalComponent,
+          resolve: { resolvePrincipal: PrincipalResolve }
         },
         {
           path: 'cadastro',

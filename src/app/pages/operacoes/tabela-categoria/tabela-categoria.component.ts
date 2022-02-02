@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ColunasFormulario } from 'src/app/models/ColunasFormulario';
 import { ConfirmPageComponent } from 'src/app/shared/confirm-page/confirm-page.component';
@@ -46,9 +47,9 @@ export class TabelaCategoriaComponent implements OnInit {
   constructor(private _route: ActivatedRoute,
               private _router: Router,
               private _dialog: MatDialog,
+              private _snackBar: MatSnackBar,
               private _categoriaService: CategoriaService) {
     this.registros = this._route.snapshot.data.resolveCategorias.categorias; 
-    console.log(this.registros)
   }
 
   
@@ -78,13 +79,31 @@ export class TabelaCategoriaComponent implements OnInit {
     if(resposta)
       await this._categoriaService.delete(categoria.id)
         .toPromise()
-        .then(r => console.log(r))
-        .catch(e => console.log(e))
+        .then(r => {
+          this.mostrarMensagem(r)
+          this.registros = this.registros.filter(r => r.id != categoria.id)
+        })
+        .catch(e => this.mostrarErros(e))
 
   }
 
   public adicionarCategoria(){
     this._router.navigate([this.routes.CRUD_CATEGORIA]);
+  }
+
+  public mostrarErros(e): void{
+    if(e.error){
+      var erros = <Array<string>> (Object.values(e.error.errors))  
+      for(let i = 0; i < erros.length; i++){
+        this._snackBar.open(erros[i], 'Fechar');
+      }
+    } else {
+      this._snackBar.open(e.message, 'Fechar');
+    } 
+  }
+
+  public mostrarMensagem(r): void{
+    this._snackBar.open(r.data, 'Fechar');    
   }
 
 }

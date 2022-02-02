@@ -20,6 +20,8 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
 import { AdicionarArquivoProdutoComponent } from './adicionar-arquivo-produto/adicionar-arquivo-produto.component';
 import { MatCardModule } from '@angular/material/card';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 
 
 const materialModules = [
@@ -31,7 +33,8 @@ const materialModules = [
   MatDialogModule,
   MatTabsModule,
   MatButtonModule,
-  MatCardModule
+  MatCardModule,
+  MatSnackBarModule
 ]
 
 
@@ -51,6 +54,7 @@ const materialModules = [
     ReactiveFormsModule,
     OperacoesRoutingModule,
     SharedModule,
+    PipesModule,
     ...materialModules
   ]
 })

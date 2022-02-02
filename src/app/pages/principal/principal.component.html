@@ -1,1 +1,46 @@
-<p>principal works!</p>
+<mat-accordion *ngIf="role == 'Administrador'" class="panel">  
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+            Gráfico de usuarios por tipo
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+  
+      <div id="usuariosXtipo" style="width: 50%; height: 300px;"></div>
+
+    </mat-expansion-panel>
+</mat-accordion>
+
+<mat-accordion *ngIf="role == 'Cliente' || role == 'Tributarista'" class="panel">  
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+            Gráfico de produtos por status
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+  
+      <div id="statusXprodutos" style="width: 50%; height: 300px;"></div>
+
+    </mat-expansion-panel>
+</mat-accordion>
+
+
+<mat-accordion *ngIf="role == 'Tributarista'" class="panel">  
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+            Gráfico de produtos por categoria
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+  
+      <div id="categoriaXprodutos" style="width: 100%; height: 300px;"></div>
+
+    </mat-expansion-panel>
+</mat-accordion>
+
+
+
+
+
+
+

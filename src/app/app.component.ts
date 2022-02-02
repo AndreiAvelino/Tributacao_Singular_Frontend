@@ -8,7 +8,6 @@ import { LocalStorageService } from 'src/services/local-storage.service';
 })
 export class AppComponent {
 
-  constructor(private _localStorage: LocalStorageService){
-    console.log(this._localStorage.get("user"))
+  constructor(){
   }
 }

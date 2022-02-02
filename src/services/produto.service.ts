@@ -21,21 +21,14 @@ export class ProdutoService {
   }
 
   public post(formulario): Observable<any>{
-
-    console.log(formulario)
-
     return this._http.post(`${this.url}api/Produto/Adicionar`, formulario)
   }
 
   public put(formulario): Observable<any>{
-
-    console.log(formulario)
-
     return this._http.put(`${this.url}api/Produto/Atualizar/${formulario.id}`, formulario)
   }
 
   public delete(id): Observable<any>{
-    console.log(id)
     return this._http.delete(`${this.url}api/Produto/Remover/${id}`)
   }
 

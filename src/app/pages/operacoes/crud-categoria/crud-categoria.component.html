@@ -9,7 +9,12 @@
           <mat-label>
             Descrição
           </mat-label>
-          <input type="text" matInput formControlName="descricao">       
+          <input type="text" matInput formControlName="descricao"> 
+          
+          <mat-error *ngIf="formulario.controls.descricao.hasError('required')">
+            A descrição é <strong>obrigatória</strong>
+          </mat-error>   
+
         </mat-form-field>
   
         <mat-form-field appearance="outline" class="input">
@@ -49,8 +54,12 @@
     [labelBotaoPut]="'Alterar'"
     [labelBotaoAuxUm]="'Voltar'"
     [disablePost]="!formulario.valid"
+    [showPut]="!cadastro"
+    [showPost]="cadastro"
+    [showDelete]=false
     (OnClickButtonPost)="post()"
     (OnClickButtonPut)="put()"
     (OnClickButtonDelete)="delete()"
     (OnClickButtonAuxUm)="voltar()"
 ></app-crud-buttons>
+

@@ -24,17 +24,13 @@ export class TabelaProdutoResolve implements Resolve<any> {
 
     async resolve() {
 
-        //console.log(this.produtos.map(p => JSON.stringify(p)))
-
         this.role = this._localStorage.get("user").userToken.claims[0].type
         this.idCliente = this._localStorage.get("user").userToken.id
         
         if(this.role == roles.TRIBUTARISTA){
-            console.log(this.role)
             await this.get_produtos();
         }
         if(this.role == roles.CLIENTE){
-            console.log(this.role)
             await this.get_produtos_cliente(this.idCliente);
         }       
 
@@ -45,14 +41,12 @@ export class TabelaProdutoResolve implements Resolve<any> {
         await this._produtoService.get_all()
             .toPromise()
             .then(r => this.produtos = r.data)
-            .catch(e => console.log(e))
     }
 
     async get_produtos_cliente(id){
         await this._clienteService.get(id)
             .toPromise()
             .then(r => this.produtos = r.data.produtos)
-            .catch(e => console.log(e))
     }
 
 }

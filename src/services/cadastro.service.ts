@@ -24,15 +24,15 @@ export class CadastroService {
     return this._http.post(`${this.url}nova-conta-Cliente`, formulario)
   }
 
-  public obter_todos(): Observable<any>{
-    return this._http.get(`${this.url}Obter-Todos`)
+  public obter_todos(id): Observable<any>{
+    return this._http.get(`${this.url}Obter-Todos/${id}`)
   }
 
   public put(formulario): Observable<any>{
-    return this._http.post(`${this.url}Remover/${formulario.id}`, formulario)
+    return this._http.put(`${this.url}Atualizar/${formulario.id}`, formulario)
   }
   
   public delete(id): Observable<any>{
-    return this._http.post(`${this.url}Remover/${id}`, null)
+    return this._http.delete(`${this.url}Remover/${id}`)
   }
 }

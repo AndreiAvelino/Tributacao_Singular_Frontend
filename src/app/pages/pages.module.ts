@@ -3,20 +3,27 @@ import { CommonModule } from '@angular/common';
 import { PagesComponent } from './pages.component';
 import { RouterModule } from '@angular/router';
 import { LayoutModule } from '../layout/layout.module';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
+import { PrincipalComponent } from './principal/principal.component';
 
 
 
 @NgModule({
   declarations: [
-    PagesComponent
+    PagesComponent,
+    PrincipalComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
-    LayoutModule
+    LayoutModule,
+    MatExpansionModule,
+    MatIconModule
   ],
   exports: [
-    PagesComponent
+    PagesComponent,
+    PrincipalComponent
   ]
 })
 export class PagesModule { }

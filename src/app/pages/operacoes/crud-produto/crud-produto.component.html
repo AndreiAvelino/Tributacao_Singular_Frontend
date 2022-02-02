@@ -1,89 +1,66 @@
-<mat-tab-group mat-align-tabs="center" animationDuration="1000ms">
-    <mat-tab label="Criar produto">
+<app-card-default titulo="Alterar produto">
 
-      <app-card-default titulo="Alterar produto">
+  <form [formGroup]="formulario">
 
-        <form [formGroup]="formulario">
+    <mat-form-field appearance="outline" class="input">
+      <mat-label>
+        Categoria
+      </mat-label>
+      <input matInput readonly type="text" formControlName="categoria">
+      <button *ngIf="formulario.value.categoriaId" matSuffix mat-icon-button aria-label="Clear" (click)="removerCategoria()">
+        <mat-icon>close</mat-icon>
+      </button>
+      <button *ngIf="!formulario.value.categoriaId" matSuffix mat-icon-button aria-label="Clear" (click)="procurarCategoria()">
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
 
-          <mat-form-field appearance="outline" class="input">
-            <mat-label>
-              Categoria
-            </mat-label>
-            <input matInput readonly type="text" formControlName="categoria">
-            <button *ngIf="formulario.value.categoriaId" matSuffix mat-icon-button aria-label="Clear" (click)="removerCategoria()">
-              <mat-icon>close</mat-icon>
-            </button>
-            <button *ngIf="!formulario.value.categoriaId" matSuffix mat-icon-button aria-label="Clear" (click)="procurarCategoria()">
-              <mat-icon>search</mat-icon>
-            </button>
-          </mat-form-field>
+    <div class="row">
 
-          <div class="row">
-
-            <div class="col-sm-6">
-              <mat-form-field appearance="outline" class="input">
-                <mat-label>
-                  Descrição
-                </mat-label>
-                <input type="text" matInput formControlName="descricao">       
-            </mat-form-field>
-        
-            <mat-form-field appearance="outline" class="input">
-                <mat-label>
-                  NCM
-                </mat-label>
-                <input type="text" matInput formControlName="ncm">       
-            </mat-form-field>
-            </div>
-
-            <div class="col-sm-6">
-              <mat-form-field appearance="outline" class="input">
-                <mat-label>
-                  EAN
-                </mat-label>
-                <input type="text" matInput formControlName="ean">       
-            </mat-form-field>
-        
-            <mat-form-field appearance="outline" class="input">
-                <mat-label>
-                  Status
-                </mat-label>
-                <input type="number" matInput formControlName="status">       
-            </mat-form-field>
-            </div>
-
-          </div>
-                   
-        </form>
-
-      </app-card-default>
-
-      <app-crud-buttons
-          [labelBotaoPost]="'Alterar'"
-          [labelBotaoAuxUm]="'Voltar'"
-          [disablePost]="!formulario.valid"
-          [showPost]=true
-          [showDelete]=false
-          (OnClickButtonPost)="post()"
-          (OnClickButtonPost)="put()"
-          (OnClickButtonAuxUm)="voltar()"
-      ></app-crud-buttons>
-        
-    </mat-tab>
-    <mat-tab label="Importar produto">
-
-        <button mat-stroked-button
-                (click)="AbrirCaixaArquivos()"
-                color="primary"><mat-icon>attach_file</mat-icon> Adicionar arquivo
-        </button>
- 
+      <div class="col-sm-6">
+        <mat-form-field appearance="outline" class="input">
+          <mat-label>
+            Descrição
+          </mat-label>
+          <input readonly type="text" matInput formControlName="descricao">       
+      </mat-form-field>
   
-        <input type="file" id="selectFiles" value="Import" accept=".json" hidden/><br />
- 
-        <button mat-flat-button 
-                (click)="upload()"
-                color="primary"><mat-icon>cloud_upload<</mat-icon> Enviar
-        </button>
+      <mat-form-field appearance="outline" class="input">
+          <mat-label>
+            NCM
+          </mat-label>
+          <input readonly readonly type="text" matInput formControlName="ncm">       
+      </mat-form-field>
+      </div>
 
-    </mat-tab>
-  </mat-tab-group>
+      <div class="col-sm-6">
+        <mat-form-field appearance="outline" class="input">
+          <mat-label>
+            EAN
+          </mat-label>
+          <input readonly type="text" matInput formControlName="ean">       
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline" class="input">
+          <mat-label>
+            Status
+          </mat-label>
+          <input readonly type="text" matInput formControlName="status" [value]="formulario.value.status | status">       
+      </mat-form-field>
+      </div>
+
+    </div>
+             
+  </form>
+
+</app-card-default>
+
+<app-crud-buttons
+    [labelBotaoPut]="'Alterar'"
+    [labelBotaoAuxUm]="'Voltar'"
+    [disablePost]="!formulario.valid"
+    [showPost]=false
+    [showDelete]=false
+    (OnClickButtonPut)="put()"
+    (OnClickButtonAuxUm)="voltar()"
+></app-crud-buttons>

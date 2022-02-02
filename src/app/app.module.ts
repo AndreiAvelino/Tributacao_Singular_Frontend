@@ -12,10 +12,11 @@ import { LoginModule } from './login/login.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RequestsInterceptor } from 'src/interceptor/requests.interceptor';
 import { ResponseInterceptor } from 'src/interceptor/response.interceptor';
+// import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,7 +27,8 @@ import { ResponseInterceptor } from 'src/interceptor/response.interceptor';
     PagesModule,
     LoginModule,
     PagesRoutingModule,
-    RouterModule
+    RouterModule,
+    // ToastrModule.forRoot()
   ],
   providers: [
     {

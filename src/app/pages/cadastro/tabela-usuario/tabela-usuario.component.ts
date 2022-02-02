@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ColunasFormulario } from 'src/app/models/ColunasFormulario';
 import { CadastroService } from 'src/services/cadastro.service';
@@ -22,9 +23,10 @@ export class TabelaUsuarioComponent implements OnInit {
 
   constructor(private _route: ActivatedRoute,
               private _router: Router,
+              private _snackBar: MatSnackBar,
               private _cadastroService: CadastroService) {
     this.registros = this._route.snapshot.data.resolveTabelaUsuario.usuarios; 
-    console.log(this.registros)
+
   }
 
   ngOnInit(): void {
@@ -37,12 +39,30 @@ export class TabelaUsuarioComponent implements OnInit {
   public delete(usuario): void{
     this._cadastroService.delete(usuario.id)
       .toPromise()
-      .then(r => console.log(r))
-      .catch(e => console.log(e))
+      .then(r => {
+        this.mostrarMensagem(r)
+        this.registros = this.registros.filter(r => r.id != usuario.id)
+      })
+      .catch(e => this.mostrarErros(e))
   }
   
   public adicionar(): void{
     this._router.navigate([this.routes.CADASTRO_USUARIO]);
+  }
+
+  public mostrarErros(e): void{
+    if(e.error){
+      var erros = <Array<string>> (Object.values(e.error.errors))  
+      for(let i = 0; i < erros.length; i++){
+        this._snackBar.open(erros[i], 'Fechar');
+      }
+    } else {
+      this._snackBar.open(e.message, 'Fechar');
+    } 
+  }
+
+  public mostrarMensagem(r): void{
+    this._snackBar.open(r.data, 'Fechar');    
   }
 
 }

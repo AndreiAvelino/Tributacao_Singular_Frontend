@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { LocalStorageService } from 'src/services/local-storage.service';
 import { ProdutoService } from 'src/services/produto.service';
 
@@ -13,13 +15,14 @@ export class AdicionarArquivoProdutoComponent implements OnInit {
   public arquivo;
 
   constructor(private _localStorage: LocalStorageService,
-              private _produtoService: ProdutoService) { }
+              private _produtoService: ProdutoService,
+              private _location: Location,
+              private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
   }
 
   public AbrirCaixaArquivos() {
-    console.log((<HTMLInputElement>document.getElementById('selectFiles')).files)
     document.getElementById('selectFiles').click();
   }
 
@@ -38,10 +41,7 @@ export class AdicionarArquivoProdutoComponent implements OnInit {
   
     var fr = new FileReader();
 
-    console.log(this._localStorage.get_user_id())
-
     fr.onload = e => {
-      console.log(e.target.result)
       let result = JSON.parse(<string> e.target.result);
 
       for(let i = 0; i < result.length; i++){
@@ -51,14 +51,16 @@ export class AdicionarArquivoProdutoComponent implements OnInit {
       }
 
       this.listaProdutosAdicionar = result;
-      console.log(this.listaProdutosAdicionar)
 
       this._produtoService.post({
         produtoViewModels: this.listaProdutosAdicionar
       })
         .toPromise()
-        .then(r => console.log(r))
-        .catch(e => console.log(e))
+        .then(r => {
+          this.mostrarMensagem(r)
+          this.voltar()
+        })
+        .catch(e => this.mostrarErros(e))
     }
   
     
@@ -71,5 +73,24 @@ export class AdicionarArquivoProdutoComponent implements OnInit {
     this.arquivo = "";
 
   }
+
+  public mostrarErros(e): void{
+    if(e.error){
+      var erros = <Array<string>> (Object.values(e.error.errors))  
+      for(let i = 0; i < erros.length; i++){
+        this._snackBar.open(erros[i], 'Fechar');
+      }
+    } else {
+      this._snackBar.open(e.message, 'Fechar');
+    } 
+  }
+
+  public mostrarMensagem(r): void{
+    this._snackBar.open(r.data, 'Fechar');    
+  }
+
+  public voltar(): void{
+    this._location.back();
+   }
 
 }

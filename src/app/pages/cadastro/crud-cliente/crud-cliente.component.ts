@@ -1,9 +1,14 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { routes } from 'src/consts/routes';
+import { ConfirmedValidator } from 'src/form-validations/confirmed-validator';
+import { FormValidations } from 'src/form-validations/form-validations';
 import { CadastroService } from 'src/services/cadastro.service';
 import { ClienteService } from 'src/services/cliente.service';
+
 
 @Component({
   selector: 'app-crud-cliente',
@@ -13,10 +18,12 @@ import { ClienteService } from 'src/services/cliente.service';
 export class CrudClienteComponent implements OnInit {
 
   public formulario: FormGroup
+  public cadastrar: boolean = true;
 
   constructor(private _formBuilder: FormBuilder,
               private _cadastroService: CadastroService,
               private _clienteService: ClienteService,
+              private _snackBar: MatSnackBar,
               private _router: Router,
               private _location: Location) {
 
@@ -35,8 +42,11 @@ export class CrudClienteComponent implements OnInit {
       email: ["", [Validators.required, Validators.email]],
       password: ["", [Validators.required]],
       confirmPassword: ["", [Validators.required]],
-      cnpj: ["", [Validators.required]],
+      cnpj: ["", [Validators.required, FormValidations.cnpjValidator, FormValidations.cnpjFormat]],
       produtos: [[]]
+    },
+    { 
+      validator: ConfirmedValidator('password', 'confirmPassword')
     })
   }
 
@@ -44,10 +54,10 @@ export class CrudClienteComponent implements OnInit {
 
     var cliente;
 
-    if(this._router.getCurrentNavigation().extras.state)
+    if(this._router.getCurrentNavigation().extras.state){
       cliente = this._router.getCurrentNavigation().extras.state.cliente
-
-    console.log(cliente)
+      this.cadastrar = false;
+    }
 
     if(cliente){
       this.formulario.patchValue({
@@ -67,12 +77,13 @@ export class CrudClienteComponent implements OnInit {
   //#region MÉTODOS DE CRUD
   public post(): void{
 
-    console.log(this.formulario.value)
-
     this._cadastroService.post_cliente(this.formulario.value)
       .toPromise()
-      .then(r => console.log(r))
-      .catch(e => console.log(e))
+      .then(r => {
+        this.mostrarMensagem(r)
+        this.voltar();
+      })
+      .catch(e => this.mostrarErros(e))
   }
 
   public put(): void{
@@ -86,16 +97,22 @@ export class CrudClienteComponent implements OnInit {
       }
     )
       .toPromise()
-      .then(r => console.log(r))
-      .catch(e => console.log(e))
+      .then(r => {
+        this.mostrarMensagem(r)
+        this.voltar();
+      })
+      .catch(e => this.mostrarErros(e))
   }
 
   async delete(): Promise<void>{
 
     await this._clienteService.delete(this.formulario.value.id)
       .toPromise()
-      .then(r => console.log(r))
-      .catch(e => console.log(e))
+      .then(r => {
+        this.mostrarMensagem(r)
+        this.voltar();
+      })
+      .catch(e => this.mostrarErros(e))
 
   
       
@@ -104,5 +121,24 @@ export class CrudClienteComponent implements OnInit {
 
   public voltar(): void{
     this._location.back();
+  }
+
+  public mostrarErros(e): void{
+    if(e.error){
+      var erros = <Array<string>> (Object.values(e.error.errors))  
+      for(let i = 0; i < erros.length; i++){
+        this._snackBar.open(erros[i], 'Fechar');
+      }
+    } else {
+      this._snackBar.open(e.message, 'Fechar');
+    } 
+  }
+
+  public mostrarMensagem(r): void{
+    if(typeof(r.data) == 'string'){
+      this._snackBar.open(r.data, 'Fechar');   
+    } else {
+      this._snackBar.open("Operação realizada com sucesso", 'Fechar');   
+    }  
   }
 }

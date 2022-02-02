@@ -12,11 +12,15 @@ import { page } from '../../../consts/page'
 export class SidebarComponent implements OnInit {
 
   public page = page;
-  public menuUsuario = menu
+  public menuUsuario
 
   constructor(private _localStorage: LocalStorageService) { }
 
   ngOnInit(): void {
+
+    menu.default()
+    this.menuUsuario = menu.valores
+
     this.menuUsuario.forEach(modulo => {
       if(modulo.submenu){
         modulo.submenu = modulo.submenu.filter(componente => componente.roles.includes(this._localStorage.get_user_role()))
@@ -26,7 +30,6 @@ export class SidebarComponent implements OnInit {
         }
       }
     })
-
    
   }
 

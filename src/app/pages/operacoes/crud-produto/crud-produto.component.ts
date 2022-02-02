@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { SimpleTableComponent } from 'src/app/shared/simple-table/simple-table.component';
 import { roles } from 'src/consts';
@@ -25,6 +26,7 @@ export class CrudProdutoComponent implements OnInit, AfterViewInit {
               private _categoriaService: CategoriaService,
               private _localStorage: LocalStorageService,
               private _formBuilder: FormBuilder,
+              private _snackBar: MatSnackBar,
               private _router: Router,
               private _dialog: MatDialog,
               private _location: Location) {
@@ -34,7 +36,6 @@ export class CrudProdutoComponent implements OnInit, AfterViewInit {
 
               }
   ngAfterViewInit(): void {
-    
   }
 
   ngOnInit(): void {
@@ -46,10 +47,10 @@ export class CrudProdutoComponent implements OnInit, AfterViewInit {
       
       this.formulario = this._formBuilder.group({
         id: [""],
-        ncm: [{value: '', disabled: this.role == roles.TRIBUTARISTA ? true : false}, Validators.required],
-        ean: [{value: '', disabled: this.role == roles.TRIBUTARISTA ? true : false}, Validators.required],
-        descricao: [{value: '', disabled: this.role == roles.TRIBUTARISTA ? true : false}, Validators.required],
-        status: [{value: '', disabled: this.role == roles.TRIBUTARISTA ? true : false}, Validators.required],
+        ncm: ['', Validators.required],
+        ean: ['', Validators.required],
+        descricao: ['', Validators.required],
+        status: [''],
         categoria: [''],
         categoriaId: ["", Validators.required],
         clienteId: ["", Validators.required]
@@ -102,59 +103,14 @@ export class CrudProdutoComponent implements OnInit, AfterViewInit {
         }
       )
       .toPromise()
-      .then(r => console.log(r))
-      .catch(e => console.log(e))
+        .then(r => {
+          this.mostrarMensagem(r)
+          this.voltar()
+        })
+        .catch(e => this.mostrarErros(e))
     }
     
    //#endregion
-
-   public AbrirCaixaArquivos() {
-    document.getElementById('selectFiles').click();
-  }
-
-  async ArquivosSelecionados(arquivos: any) {
-    console.log(arquivos)
-    var reader = new FileReader();
-    reader.readAsText(arquivos.target.result);
-  }
-
-  public upload(){
-  
-    var files = (<HTMLInputElement>document.getElementById('selectFiles')).files;
-      
-    if (files.length <= 0) {
-      return false;
-    }
-  
-    var fr = new FileReader();
-
-    console.log(this._localStorage.get_user_id())
-
-    fr.onload = e => {
-      console.log(e.target.result)
-      let result = JSON.parse(<string> e.target.result);
-
-      for(let i = 0; i < result.length; i++){
-        result[i]['id'] = '00000000-0000-0000-0000-000000000000'
-        result[i]['clienteId'] = this._localStorage.get_user_id()
-        result[i]['categoriaId'] = '00000000-0000-0000-0000-000000000000'
-      }
-
-      this.listaProdutosAdicionar = result;
-      console.log(this.listaProdutosAdicionar)
-
-      this._produtoService.post({
-        produtoViewModels: this.listaProdutosAdicionar
-      })
-        .toPromise()
-        .then(r => console.log(r))
-        .catch(e => console.log(e))
-    }
-  
-    
-  
-    fr.readAsText(files.item(0));
-  };
 
   public removerCategoria(): void{
     this.formulario.patchValue({
@@ -171,10 +127,8 @@ export class CrudProdutoComponent implements OnInit, AfterViewInit {
     await this._categoriaService.get_all()
       .toPromise()
       .then(r => categorias = r.data)
-
-    console.log(categorias)
   
-    dialogConfig.height = '400px';
+    dialogConfig.maxHeight = '400px';
     dialogConfig.data = {
       //registros: categorias
       registros: categorias,
@@ -194,14 +148,41 @@ export class CrudProdutoComponent implements OnInit, AfterViewInit {
   }
 
   public adicionarCategoria(categoria): void{
-    this.formulario.patchValue({
-      categoria: categoria.descricao,
-      categoriaId: categoria.id
-    })
+
+    if(categoria){
+
+      this.formulario.patchValue({
+        categoria: categoria.descricao,
+        categoriaId: categoria.id,
+      })
+
+      if(this.produto.categoriaId != categoria.id){        
+        this.formulario.patchValue({
+          status: 1
+        })
+      }
+      
+    }
+    
   }
   
   public voltar(): void{
     this._location.back();
+  }
+
+  public mostrarErros(e): void{
+    if(e.error){
+      var erros = <Array<string>> (Object.values(e.error.errors))  
+      for(let i = 0; i < erros.length; i++){
+        this._snackBar.open(erros[i], 'Fechar');
+      }
+    } else {
+      this._snackBar.open(e.message, 'Fechar');
+    } 
+  }
+
+  public mostrarMensagem(r): void{
+    this._snackBar.open(r.data, 'Fechar');    
   }
 
  

@@ -15,9 +15,6 @@ export class SimpleTableComponent implements OnInit, AfterViewInit {
   constructor(@Inject(MAT_DIALOG_DATA) data,
               private dialogRef: MatDialogRef<SimpleTableComponent>) {
 
-                console.log(data.colunas)
-                console.log(data.registros)
-
                 this.colunas = data.colunas,
                 this.registros = data.registros
 

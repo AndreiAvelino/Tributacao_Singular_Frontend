@@ -1,18 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PrincipalComponent } from './principal.component';
+import { StatusPipe } from './status.pipe';
+import { CnpjPipe } from './cnpj.pipe';
 
 
 
 @NgModule({
   declarations: [
-    PrincipalComponent
+    StatusPipe,
+    CnpjPipe
   ],
   imports: [
     CommonModule
   ],
   exports: [
-    PrincipalComponent
+    StatusPipe,
+    CnpjPipe
   ]
 })
-export class PrincipalModule { }
+export class PipesModule { }

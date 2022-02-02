@@ -17,7 +17,6 @@ export class CategoriaService {
   }
 
   public get_all(): Observable<any> {
-    console.log("get aloo entrou")
     return this._http.get(`${this.url}api/Categoria/Obter-Todos`)
   }
 

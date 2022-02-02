@@ -174,3 +174,26 @@
     color: $blue;
   }
 }
+
+.btn_valido{
+  color: #ffffff;
+  background-color: #536DFE;
+  width: 100%;
+}
+
+.btn_valido:hover{
+  color: #ffffff;
+  background-color: #2e4eff;
+  width: 100%
+}
+
+.btn_invalido{
+  color: #ffffff;
+  background-color: #536DFE;
+  width: 100%;
+}
+
+.mat-spinner-color::ng-deep circle{
+  stroke: #FFFFFF !important;
+}
+

@@ -25,7 +25,7 @@ export class ResponseInterceptor implements HttpInterceptor {
     //         if(event == event.body){
     //           event = event.body.data
     //         }
-    //           console.log('event--->>>', event);
+ 
     //       }
     //       return event;
     //   }));
