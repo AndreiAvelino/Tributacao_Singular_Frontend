@@ -9,7 +9,8 @@ const routes = {
     TABELA_PRODUTO: '/pages/operacoes/tabela-produto',
     CRUD_PRODUTO: '/pages/operacoes/crud-produto',
     ADICIONAR_LISTA_PRODUTO: './pages/operacoes/adicionar-lista-produto',
-    LOGIN: '/login'
+    LOGIN: '/login',
+    FOTO_PERFIL: '/foto-perfil'
 }
 
 export { routes }

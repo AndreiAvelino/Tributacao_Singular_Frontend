@@ -6,6 +6,7 @@ import { LayoutModule } from '../layout/layout.module';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { PrincipalComponent } from './principal/principal.component';
+import { GlobalModule } from './global/global.module';
 
 
 
@@ -18,6 +19,7 @@ import { PrincipalComponent } from './principal/principal.component';
     CommonModule,
     RouterModule,
     LayoutModule,
+    GlobalModule,
     MatExpansionModule,
     MatIconModule
   ],

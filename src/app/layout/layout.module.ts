@@ -9,23 +9,29 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import { SidebarModule } from './sidebar/sidebar.module';
+import { MenuUsuarioComponent } from './navbar/menu-usuario/menu-usuario.component';
+import {MatMenuModule} from '@angular/material/menu';
+import { AvatarModule } from 'ngx-avatar';
 
 
 const MaterialModules = [
   MatButtonModule,
   MatIconModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatMenuModule
 ]
 
 @NgModule({
   declarations: [
     LayoutComponent, 
     NavbarComponent, 
-    FooterComponent, 
+    FooterComponent,
+    MenuUsuarioComponent, 
   ],
   imports: [
     CommonModule,
     SidebarModule,
+    AvatarModule,
     ...MaterialModules
   ],
   exports:[

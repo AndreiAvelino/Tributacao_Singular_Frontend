@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { routes } from 'src/consts/routes';
-import { LocalStorageService } from 'src/services/local-storage.service';
 import { page } from '../../../consts/page'
 
 @Component({
@@ -13,8 +10,7 @@ export class NavbarComponent implements OnInit {
 
   public page = page;
 
-  constructor(private _localStorage: LocalStorageService,
-              private _router: Router) { }
+  constructor() { }
 
   ngOnInit(): void {
   }
@@ -23,9 +19,5 @@ export class NavbarComponent implements OnInit {
     this.page.SIDENAV_STATE = !this.page.SIDENAV_STATE;
   }
 
-  public sair(){
-    this._localStorage.clear();
-    this._router.navigate([routes.LOGIN])
-  }
 
 }
