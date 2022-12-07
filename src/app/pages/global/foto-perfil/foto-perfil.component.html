@@ -1,8 +1,8 @@
 <form [formGroup]="formulario" style="text-align: center">
     <div style="display: inline-block;">
-        <input-imagem formControlName="Photo"></input-imagem>
+        <input-imagem formControlName="Src" (emitBtnRemoverImagem)="RemoverFoto()"></input-imagem>
         <mat-card style="margin: 30px; width: 30vw;">
-             <button style="width: 100%" mat-raised-button color="accent" (click)="EnviarFoto()"> 
+             <button style="width: 100%" mat-raised-button color="accent" (click)="EnviarFoto()" [disabled]="HabilitaBotaoEnviar()"> 
                 <mat-icon> screen_share</mat-icon> Enviar Foto
             </button>
         </mat-card>

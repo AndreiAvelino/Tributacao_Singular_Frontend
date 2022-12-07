@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -18,8 +18,10 @@ export class InputImagemComponent implements ControlValueAccessor {
 
   @ViewChild("inputImg") inputImg; 
 
-  private innerValue: any;
+  private innerValue: String = "";
+  public imagemAExibir: any;
 
+  @Output() emitBtnRemoverImagem = new EventEmitter();
 
   
   onChange: (v: any) => void = () => {}
@@ -29,14 +31,24 @@ export class InputImagemComponent implements ControlValueAccessor {
   }
 
   set value(v: any) {
-    this.innerValue = v;
+
+    if(v != ''){
+      this.imagemAExibir = "data:image/png;base64," + v
+    } else {
+      this.imagemAExibir = ''
+    }
+
+    this.innerValue = v;    
     this.onChange(v);
   }
 
 
   constructor() { }
   writeValue(v: any): void {
-    this.value = v;
+    if(v){
+      this.imagemAExibir = "data:image/png;base64," + v
+      this.value = v;
+    }
   }
 
   registerOnChange(fn: any): void {
@@ -52,24 +64,50 @@ export class InputImagemComponent implements ControlValueAccessor {
   }
 
   public SelecionarImagem(): void {
+    var teste = this.inputImg.nativeElement
     this.inputImg.nativeElement.click()
   }
 
   public RemoverImagem(): void {
     this.value = "";
+    this.emitBtnRemoverImagem.emit();
   }
 
-  onSelectFile(event) { // called each time file input changes
-    if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
+  onSelectFile(files, event) { 
 
-      reader.readAsDataURL(event.target.files[0]); // read file as data url
-
-      reader.onload = (event) => { // called once readAsDataURL is completed
-        this.value = event.target.result;
-        //console.log(event.target.result)
-      }
+    if(files.length == 0){
+      return;
     }
+
+    if (event.target.files && event.target.files[0]) {
+        var reader = new FileReader();
+    
+        reader.readAsDataURL(event.target.files[0]); 
+    
+        reader.onload = (event) => { 
+          this.imagemAExibir = event.target.result;
+        }
+    }
+
+    this.value = files[0]
+
+    event.target.value = ''
+  }
+
+  public HabilitaBotaoAdicionar(): boolean {
+    if(this.innerValue != ""){
+      return true;
+    }
+
+    return false;
+  }
+
+  public HabilitarBotaoRemover(): boolean {
+    if(this.innerValue == ""){
+      return true;
+    }
+
+    return false;
   }
 
 

@@ -1,12 +1,12 @@
 <mat-card style="margin: 30px; width: 30vw; height: 500;">
-    <img [src]="value ? value : 'assets/sem-foto.jpg'" width="600" height="400"/>
-    <input #inputImg style="display: none;" type='file' (change)="onSelectFile($event)">
+    <img [src]="imagemAExibir ? imagemAExibir : 'assets/sem-foto.jpg'" width="600" height="400"/>
+    <input #inputImg style="display: none;" type='file' (change)="onSelectFile(inputImg.files, $event)">
 
     <br>
 
     <div style="margin-top: 10px;">
-        <button style="width: 100%" mat-raised-button color="primary" (click)="SelecionarImagem()"><mat-icon>add_a_photo</mat-icon> Escolher Imagem</button>
+        <button style="width: 100%" mat-raised-button color="primary" (click)="SelecionarImagem()" [disabled]="HabilitaBotaoAdicionar()" ><mat-icon>add_a_photo</mat-icon> Escolher Imagem</button>
         <br>
-        <button style="width: 100%; margin-top: 10px;" mat-raised-button color="warn" (click)="RemoverImagem()"> 	<mat-icon>delete</mat-icon> Remover imagem</button>
+        <button style="width: 100%; margin-top: 10px;" mat-raised-button color="warn" (click)="RemoverImagem()" [disabled]="HabilitarBotaoRemover()"> 	<mat-icon>delete</mat-icon> Remover imagem</button>
     </div>
 </mat-card>
