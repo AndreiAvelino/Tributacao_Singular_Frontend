@@ -66,14 +66,21 @@ export class FotoPerfilComponent implements OnInit {
 
   }
 
-  public EnviarFoto(): void {
+  async EnviarFoto(): Promise<void> {
 
-    this.fotoUsuarioService.post(this.formulario.value)
-      .subscribe(res => {
+    await this.fotoUsuarioService.post(this.formulario.value).toPromise()
+      .then(res => {
         this._snackBar.open("Upload realizado com sucesso", 'Fechar'); 
       },
       err => {
         this._snackBar.open("Ocorreu um erro!", 'Fechar'); 
+      })
+
+    this.fotoUsuarioService.get(this._localStorage.get_user_id()).toPromise()
+      .then(r => {
+        this.formulario.patchValue({
+          Id: r.data.id
+        })
       })
   }
 

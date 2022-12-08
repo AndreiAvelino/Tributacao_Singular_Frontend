@@ -1,5 +1,5 @@
-<mat-card style="margin: 30px; width: 30vw; height: 500;">
-    <img [src]="imagemAExibir ? imagemAExibir : 'assets/sem-foto.jpg'" width="600" height="400"/>
+<mat-card class="cardfoto">
+    <img [src]="imagemAExibir ? imagemAExibir : 'assets/sem-foto.jpg'" style="width: 100%; height: auto"/>
     <input #inputImg style="display: none;" type='file' (change)="onSelectFile(inputImg.files, $event)">
 
     <br>

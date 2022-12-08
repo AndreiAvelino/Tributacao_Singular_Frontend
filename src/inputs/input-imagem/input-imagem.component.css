@@ -1,0 +1,14 @@
+
+.cardfoto {
+    margin: 30px; 
+    width: auto; 
+    height: auto;
+}
+
+@media (min-width: 1000px){
+    .cardfoto {
+        margin: 30px; 
+        width: 30vw; 
+        height: 500;
+    }
+}
