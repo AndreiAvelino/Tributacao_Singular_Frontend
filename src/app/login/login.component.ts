@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit {
       await this._loginService.login(this.formulario.value)      
         .toPromise()
         .then(r => {
+          console.log(r)
           this._loginService.setOnLocalStorage(r.data)
           this._loginService.redirect();
         })

@@ -85,7 +85,7 @@ export class SuperTableComponent implements OnInit, AfterViewInit {
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.registros.data.filter(v => v.status == 1).length;
+    const numRows = this.registros?.data?.filter(v => v.status == 1).length;
     return numSelected === numRows;
   }
 

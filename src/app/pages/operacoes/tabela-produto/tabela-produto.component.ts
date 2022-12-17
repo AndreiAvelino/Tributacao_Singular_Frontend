@@ -81,7 +81,7 @@ export class TabelaProdutoComponent implements OnInit {
         .toPromise()
         .then(r => {
           this.mostrarMensagem(r)
-          this.registros = this.registros.filter(r => r.id != produto.id)
+          this.registros = this.registros.filter(registro => registro.id != produto.id)
         })
         .catch(e => this.mostrarErros(e))
 

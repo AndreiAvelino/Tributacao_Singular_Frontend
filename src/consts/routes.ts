@@ -10,7 +10,7 @@ const routes = {
     CRUD_PRODUTO: '/pages/operacoes/crud-produto',
     ADICIONAR_LISTA_PRODUTO: './pages/operacoes/adicionar-lista-produto',
     LOGIN: '/login',
-    FOTO_PERFIL: '/foto-perfil'
+    FOTO_PERFIL: 'pages/foto-perfil'
 }
 
 export { routes }

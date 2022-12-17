@@ -2,7 +2,7 @@ import { HttpEventType } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FotoService } from 'src/services/foto.service';
 import { LocalStorageService } from 'src/services/local-storage.service';
 
@@ -26,8 +26,11 @@ export class FotoPerfilComponent implements OnInit {
     private formBuilder: FormBuilder,
     private fotoUsuarioService: FotoService,
     private _localStorage: LocalStorageService,
-    private _snackBar: MatSnackBar) 
-  {}
+    private _snackBar: MatSnackBar,
+    private activatedRoute: ActivatedRoute) 
+  {
+
+  }
 
   ngOnInit(): void {
 
@@ -41,16 +44,15 @@ export class FotoPerfilComponent implements OnInit {
   }
 
   public RecuperarFoto(): void {
-    this.fotoUsuarioService.get(this._localStorage.get_user_id()).toPromise()
-      .then(r => {
-        if(r.data){
-          this.formulario.patchValue({
-            Src: r.data.src,
-            Id: r.data.id,
-            idUsuario: r.data.idUsuario
-          })
-        }
+
+    if(this.activatedRoute.snapshot.data.foto.data){
+      this.formulario.patchValue({
+        Src: this.activatedRoute.snapshot.data.foto.data.src,
+        Id: this.activatedRoute.snapshot.data.foto.data.id,
+        idUsuario: this.activatedRoute.snapshot.data.foto.data.idUuario
       })
+    }
+    
   }
 
   async RemoverFoto(): Promise<void> {
