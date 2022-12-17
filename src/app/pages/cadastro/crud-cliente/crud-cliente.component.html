@@ -35,7 +35,7 @@
           <mat-label>
             CNPJ
           </mat-label>
-          <input type="text" matInput formControlName="cnpj" [value]="formulario.value.cnpj | cnpj">  
+          <input type="text" matInput formControlName="cnpj" mask="00.000.000/0000-00">  
           <mat-error *ngIf="formulario.controls.cnpj.hasError('cnpjValidator')">
             A numeração do CNPJ é <strong>inválida</strong>
           </mat-error>       

@@ -17,6 +17,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { TabelaUsuarioComponent } from './tabela-usuario/tabela-usuario.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { PipesModule } from 'src/app/pipes/pipes.module';
+import { NgxMaskModule } from 'ngx-mask'
 
 const materialModules = [
   MatInputModule,
@@ -50,6 +51,7 @@ const internalComponents = [
     FormsModule,
     ReactiveFormsModule,
     PipesModule,
+    NgxMaskModule.forRoot(),
     ...routeModules,
     ...materialModules
   ]

@@ -87,6 +87,17 @@ export class CrudClienteComponent implements OnInit {
   }
 
   public put(): void{
+
+    console.log(
+      JSON.stringify(
+        {
+          id: this.formulario.value.id,
+          nome: this.formulario.value.nome,
+          cnpj: this.formulario.value.cnpj,
+          produtos: this.formulario.value.produtos
+        }
+      )
+    )
   
     this._clienteService.put(
       {
